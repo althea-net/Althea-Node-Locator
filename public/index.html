@@ -8,13 +8,27 @@
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
     </head>
-    <body onload="setCountryFlag()">
-        
+    <body>
     <div id="map"></div>
+    <script type="text/javascript">
+        function initMap() {} 
+    
+        document.addEventListener("DOMContentLoaded", function(event) { 
+            initMap = function() {
+                resetView();
+                // geocoder = new google.maps.Geocoder();
+        
+                // document.getElementById('submit').addEventListener('click', function() {
+                //     const address = city + " " + zipCode + " " + country;
+                //     geocodeAddress(geocoder, map);
+                // });
+            }
+        })
+    </script>
+    <script type="text/javascript" src="app.js"></script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbo5K9S-E3RhdNK0e4OJaSjx0ZD74eO8Q&callback=initMap">
     </script>
-
     <div class="user_form">
         <iframe name="votar" style="display:none;"></iframe>
         <form action="/submit" method="POST" target="votar">
@@ -30,6 +44,7 @@
                 <label for="user_lname_input">Last Name:</label><br>
                 <input type="text" id="user_lname_input" name="user_lname_input" class="form_control" placeholder="Nakamoto" autocomplete="off" value="Attano" maxlength="15" required>
             </div>
+            
             <div>
                 <label for="user_country_menu">Country:</label><br>
                 <select id="user_country_menu" name="user_country_menu" onchange="showDiv('user_country_menu')">
@@ -284,7 +299,8 @@
                     <option value="ZW">Zimbabwe</option>
                 </select>
             </div>
-            <div class="hidden_form" id="user_us_state_form">
+
+            <!-- <div class="hidden_form" id="user_us_state_form">
                 <label for="user_us_state_menu">States & Territories:</label><br>
                 <select id="user_us_state_menu" name="user_us_state_menu">
                     <optgroup label="States">
@@ -408,7 +424,8 @@
                             <option value="ZAC">Zacatecas</option>
                     </optgroup>
                 </select>
-            </div>
+            </div> -->
+            
             <div>
                 <label name="user_city_input">City:</label><br>
                 <input type="text" id="user_city_input" name="user_city_input" class="form_control" autocomplete="off" placeholder="Brooklyn" value="Brooklyn" maxlength="20" required/>
@@ -421,15 +438,10 @@
                 <div class="g-recaptcha"
                 data-sitekey="6LeopD8UAAAAAGQ6b98202chGMEYdsXBAoOly_Zk">
                 </div>
-    
-                <!-- data-callback="dataCallback"
-                data-expired-callback="dataExpiredCallback"/> -->
             </div>
             <input type="submit" id="submit" value="Submit"/>
         </form>
         <button onclick="resetView()">Reset View</button>
     </div>
-    <!-- <p>*Note: Street address is not required for volunteers interested in joining the Althea network</p> -->
-    <script type="text/javascript" src="app.js"></script>
     </body>
 </html>

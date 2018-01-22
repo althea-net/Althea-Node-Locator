@@ -1,4 +1,4 @@
-
+// @ts-check
 
 var config = {
   apiKey: "AIzaSyA0Q7m1gULd67FSmRGaoP6UUtV-zlmMcJc",
@@ -14,7 +14,7 @@ firebase.initializeApp(config);
 var map;
 var geocoder;
 var address = null;
-var countryFlag = 0;
+// var countryFlag = 0;
 
 var userData = {
   country: null,
@@ -23,21 +23,41 @@ var userData = {
   lng: null
 }
 
+var emailAddr = document.getElementById("user_email_input");
+var firstName = document.getElementById("user_fname_input");
+var lastName = document.getElementById("user_lname_input");
+var country = document.getElementById("user_country_menu");
+var city = document.getElementById("user_city_input");
+var zipCode = document.getElementById("user_zip_code_input");
 
-function initMap() {
-  // Initialize blank map with markers
-  resetView();
 
-  geocoder = new google.maps.Geocoder();
+// function initMap() {} // now it IS a function and it is in global
 
-  submitBtn.addEventListener("click", function() {
+// document.addEventListener("DOMContentLoaded", function(event) { 
+//     initMap = function() {
+//         resetView();
+//           geocoder = new google.maps.Geocoder();
 
-    // console.log(country.value);
+//         document.getElementById('submit').addEventListener('click', function() {
+//           const address = city + " " + zipCode + " " + country;
+//           geocodeAddress(geocoder, map);
+//         });
+//     }
+// })
 
-    
-    geocodeAddress(geocoder, map);
-  });
-}
+// function initMap() {
+//   // Initialize map with markers
+//   resetView();
+
+//   geocoder = new google.maps.Geocoder();
+
+//   document.getElementById('submit').addEventListener('click', function() {
+
+//     const address = city + " " + zipCode + " " + country;
+
+//     geocodeAddress(geocoder, map);
+//   });
+// }
 
 function readFromFirebase(){
   // Query data base for stored locations
@@ -62,50 +82,50 @@ function readFromFirebase(){
 } 
 
 // Convert address to Lat/ Lng
-function geocodeAddress(geocoder, resultsMap) {
-  geocoder.geocode({'address': address}, function(results, status) {
-    console.log(results)
-    if (status === 'OK') {
-      resultsMap.setCenter(results[0].geometry.location);
-      resultsMap.setZoom(14);
-      var marker = new google.maps.Marker({
-        position: results[0].geometry.location,
-        map: resultsMap
-      });
-    } else {
-      alert('Geocode was not successful for the following reason: ' + status);
-    }
-  });
-}
+// function geocodeAddress(geocoder, resultsMap) {
+//   geocoder.geocode({'address': address}, function(results, status) {
+//     console.log(results)
+//     if (status === 'OK') {
+//       resultsMap.setCenter(results[0].geometry.location);
+//       resultsMap.setZoom(14);
+//       var marker = new google.maps.Marker({
+//         position: results[0].geometry.location,
+//         map: resultsMap
+//       });
+//     } else {
+//       alert('Geocode was not successful for the following reason: ' + status);
+//     }
+//   });
+// }
 
-function setCountryFlag(){
-  countryFlag = 1; 
- }
+// function setCountryFlag(){
+//   countryFlag = 1; 
+//  }
 
-function hideDiv(hide){
-  var elemHide = document.getElementsByClassName(hide);
-  for(var i = 0; i < elemHide.length; i++){
-    elemHide[i].style.display = "none";
-  }
-}
+// function hideDiv(hide){
+//   var elemHide = document.getElementsByClassName(hide);
+//   for(var i = 0; i < elemHide.length; i++){
+//     elemHide[i].style.display = "none";
+//   }
+// }
 
-function showDiv(trig){
-  console.log(country)
-  hideDiv("hidden_form");
-  var elemTrig = document.getElementById(trig);
-  if(elemTrig.value == "CA"){
-    document.getElementById("user_ca_state_form").style.display = "block";
-    countryFlag = 2; 
-  }else if(elemTrig.value == "MX"){
-    document.getElementById("user_mx_state_form").style.display = "block";
-    countryFlag = 3; 
-  }else if(elemTrig.value == "US"){
-    document.getElementById("user_us_state_form").style.display = "block";
-    countryFlag = 1; 
-  }else{
-    countryFlag = 0;
-  }
-}
+// function showDiv(trig){
+//   console.log(country)
+//   hideDiv("hidden_form");
+//   var elemTrig = document.getElementById(trig);
+//   if(elemTrig.value == "CA"){
+//     document.getElementById("user_ca_state_form").style.display = "block";
+//     countryFlag = 2; 
+//   }else if(elemTrig.value == "MX"){
+//     document.getElementById("user_mx_state_form").style.display = "block";
+//     countryFlag = 3; 
+//   }else if(elemTrig.value == "US"){
+//     document.getElementById("user_us_state_form").style.display = "block";
+//     countryFlag = 1; 
+//   }else{
+//     countryFlag = 0;
+//   }
+// }
 
 function resetView(){
   map = new google.maps.Map(document.getElementById('map'), {
