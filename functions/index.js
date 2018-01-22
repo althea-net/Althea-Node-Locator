@@ -23,37 +23,10 @@ exports.submit = firebaseFunc.https.onRequest((req, res) => {
     const firstName = req.body["user_fname_input"];
     const lastName = req.body["user_lname_input"];
     const country = req.body["user_country_menu"];
-    // const usStates = req.body["user_us_state_menu"];
-    // const caStates = req.body["user_ca_state_menu"];
-    // const mxStates = req.body["user_mx_state_menu"];
     const city = req.body["user_city_input"];
     const zipCode = req.body["user_zip_code_input"];
 
     const address = city + " " + zipCode + " " + country;
-
-    // switch(countryFlag){
-    //     case 1:    
-    //       address = city + " " + usStates + " " + zipCode + " " + country;
-    //     //   caStates = null;
-    //     //   mxStates = null;
-    //       break;
-    //     case 2: 
-    //       address = city + " " + caStates + " " + zipCode + " " + country;
-    //     //   usStates = null;
-    //     //   mxStates = null;
-    //       break;
-    //     case 3: 
-    //       address = city + " " + mxStates + " " + zipCode + " " + country;
-    //     //   caStates = null;
-    //     //   usStates = null;
-    //       break;
-    //     case 0: 
-    //       address = city + " " + zipCode + " " + country;
-    //     //   caStates = null;
-    //     //   mxStates = null;
-    //     //   usStates = null;
-    //       break;
-    //   }
 
     rp({
         uri: 'https://recaptcha.google.com/recaptcha/api/siteverify',
@@ -75,9 +48,6 @@ exports.submit = firebaseFunc.https.onRequest((req, res) => {
                     },
                     User_Location: {
                       City: city,
-                    //   US_State: usStates,
-                    //   CA_Province: caStates,
-                    //   MX_State: mxStates,
                       Zip_Postal_Code: zipCode,
                       Country: country
                     },
