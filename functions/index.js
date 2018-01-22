@@ -1,9 +1,12 @@
 // @ts-check
 
-const functions = require('firebase-functions')
+const firebaseAdmin = require('firebase-admin')
+const firebaseFunc = require('firebase-functions')
 const rp = require('request-promise')
 
-exports.submit = functions.https.onRequest((req, res) => {
+firebaseAdmin.initializeApp(firebaseFunc.config().firebase);
+
+exports.submit = firebaseFunc.https.onRequest((req, res) => {
     const recaptchaResponse = req.body["g-recaptcha-response"];
 
     const emailAddr = req.body["user_email_input"];
@@ -16,30 +19,54 @@ exports.submit = functions.https.onRequest((req, res) => {
     const city = req.body["user_city_input"];
     const zipCode = req.body["user_zip_code_input"];
 
-    // remove .value
-    switch(countryFlag){
-        case 1:    
-          address = city.value + " " + usStates.value + " " + zipCode.value + " " + country.value;
-          caStates.value = null;
-          mxStates.value = null;
-          break;
-        case 2: 
-          address = city.value + " " + caStates.value + " " + zipCode.value + " " + country.value;
-          usStates.value = null;
-          mxStates.value = null;
-          break;
-        case 3: 
-          address = city.value + " " + mxStates.value + " " + zipCode.value + " " + country.value;
-          caStates.value = null;
-          usStates.value = null;
-          break;
-        case 0: 
-          address = city.value + " " + zipCode.value + " " + country.value;
-          caStates.value = null;
-          mxStates.value = null;
-          usStates.value = null;
-          break;
-      }
+
+    firebaseAdmin.database().ref("Country/" + "El_Salvador").push().set({
+        foo: "bar"
+        // User_Information: {
+        //   First_Name: firstName,
+        //   Last_Name: lastName, 
+        //   Email: emailAddr
+        // },
+        // User_Location: {
+        //   // Street_Address: streetAddr, 
+        //   City: city,
+        //   US_State: usStates,
+        //   CA_Province: caStates,
+        //   MX_State: mxStates,
+        //   Zip_Postal_Code: zipCode,
+        //   Country: country
+        // },
+        // GPS_Coordinates: {
+        //   Latitude: data.geometry.location.lat(),
+        //   Longitude: data.geometry.location.lng()
+        // }
+      });
+
+      res.end("Recaptcha verification successful.")
+
+    // switch(countryFlag){
+    //     case 1:    
+    //       address = city + " " + usStates + " " + zipCode + " " + country;
+    //     //   caStates = null;
+    //     //   mxStates = null;
+    //       break;
+    //     case 2: 
+    //       address = city + " " + caStates + " " + zipCode + " " + country;
+    //     //   usStates = null;
+    //     //   mxStates = null;
+    //       break;
+    //     case 3: 
+    //       address = city + " " + mxStates + " " + zipCode + " " + country;
+    //     //   caStates = null;
+    //     //   usStates = null;
+    //       break;
+    //     case 0: 
+    //       address = city + " " + zipCode + " " + country;
+    //     //   caStates = null;
+    //     //   mxStates = null;
+    //     //   usStates = null;
+    //       break;
+    //   }
 
     rp({
         uri: 'https://recaptcha.google.com/recaptcha/api/siteverify',
@@ -51,30 +78,7 @@ exports.submit = functions.https.onRequest((req, res) => {
         json: true
     }).then(result => {
         if (result.success) {
-            res.end("Recaptcha verification successful.")
 
-            // function writeToFirebase(data){
-                // firebase.database().ref("Country/" + country.value).push().set({
-                //   User_Information: {
-                //     First_Name: firstName.value,
-                //     Last_Name: lastName.value, 
-                //     Email: emailAddr.value
-                //   },
-                //   User_Location: {
-                //     // Street_Address: streetAddr.value, 
-                //     City: city.value,
-                //     US_State: usStates.value,
-                //     CA_Province: caStates.value,
-                //     MX_State: mxStates.value,
-                //     Zip_Postal_Code: zipCode.value,
-                //     Country: country.value
-                //   },
-                //   GPS_Coordinates: {
-                //     Latitude: data.geometry.location.lat(),
-                //     Longitude: data.geometry.location.lng()
-                //   }
-                // });
-            //   }
         }
         else {
             res.end("Recaptcha verification failed.")
@@ -82,7 +86,4 @@ exports.submit = functions.https.onRequest((req, res) => {
     }).catch(reason => {
         res.end("Recaptcha request failed.")
     })
-
-    res.end("Recaptcha API request failed.");
-
 })
