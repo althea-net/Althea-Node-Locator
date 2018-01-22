@@ -8,8 +8,10 @@ const rp = require('request-promise')
 firebaseAdmin.initializeApp(firebaseFunc.config().firebase);
 
 var options = {
-"ADD STUFF HERE"
-  };
+    provider: 'google',
+    httpAdapter: 'https', 
+    apiKey: "ENTER YOUR GOOGLE MAPS API KEY",
+    formatter: null   };
 
 var geocoder = nodeGeocoder(options);
 
@@ -29,32 +31,31 @@ exports.submit = firebaseFunc.https.onRequest((req, res) => {
         uri: 'https://recaptcha.google.com/recaptcha/api/siteverify',
         method: 'POST',
         formData: {
-            secret: 'ADD STUFF HERE',
+            secret: 'ENTER YOUR SECRET KEY',
             response: recaptchaResponse
         },
         json: true
     }).then(result => {
         if (result.success) {
             geocoder.geocode(address, function(err, geoCoderResult) {
-
-                firebaseAdmin.database().ref("Country/" + country).push().set({
-                    User_Information: {
-                      First_Name: firstName,
-                      Last_Name: lastName, 
-                      Email: emailAddr
-                    },
-                    User_Location: {
-                      City: city,
-                      Zip_Postal_Code: zipCode,
-                      Country: country
-                    },
-                    GPS_Coordinates: {
-                      Latitude: geoCoderResult[0].latitude,
-                      Longitude: geoCoderResult[0].longitude
-                    }
-                  });
-                  res.end("Recaptcha verification successful.")
-              });
+            firebaseAdmin.database().ref("Country/" + country).push().set({
+                User_Information: {
+                    First_Name: firstName,
+                    Last_Name: lastName, 
+                    Email: emailAddr
+                },
+                User_Location: {
+                    City: city,
+                    Zip_Postal_Code: zipCode,
+                    Country: country
+                },
+                GPS_Coordinates: {
+                    Latitude: geoCoderResult[0].latitude,
+                    Longitude: geoCoderResult[0].longitude
+                }
+                });
+                res.end("Recaptcha verification successful.")
+            });
         }
         else {
             res.status(500).end("Recaptcha verification failed.")

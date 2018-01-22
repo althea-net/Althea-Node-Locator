@@ -1,7 +1,12 @@
 // @ts-check
 
 var config = {
-"ADD STUFF HERE"
+  apiKey: "ENTER YOUR INFO",
+  authDomain: "ENTER YOUR INFO",
+  databaseURL: "ENTER YOUR INFO",
+  projectId: "ENTER YOUR INFO",
+  storageBucket: "ENTER YOUR INFO",
+  messagingSenderId: "ENTER YOUR INFO"
 };
 
 firebase.initializeApp(config);
