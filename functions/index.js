@@ -8,10 +8,7 @@ const rp = require('request-promise')
 firebaseAdmin.initializeApp(firebaseFunc.config().firebase);
 
 var options = {
-    provider: 'google',
-    httpAdapter: 'https', 
-    apiKey: "AIzaSyA0Q7m1gULd67FSmRGaoP6UUtV-zlmMcJc",
-    formatter: null 
+"ADD STUFF HERE"
   };
 
 var geocoder = nodeGeocoder(options);
@@ -32,7 +29,7 @@ exports.submit = firebaseFunc.https.onRequest((req, res) => {
         uri: 'https://recaptcha.google.com/recaptcha/api/siteverify',
         method: 'POST',
         formData: {
-            secret: '6LeopD8UAAAAALTKnD0jUog0tmE4Xvm_ofL128JM',
+            secret: 'ADD STUFF HERE',
             response: recaptchaResponse
         },
         json: true
@@ -56,7 +53,6 @@ exports.submit = firebaseFunc.https.onRequest((req, res) => {
                       Longitude: geoCoderResult[0].longitude
                     }
                   });
-        
                   res.end("Recaptcha verification successful.")
               });
         }
