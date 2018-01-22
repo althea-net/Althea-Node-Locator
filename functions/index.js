@@ -20,22 +20,20 @@ exports.submit = firebaseFunc.https.onRequest((req, res) => {
     const zipCode = req.body["user_zip_code_input"];
 
 
-    firebaseAdmin.database().ref("Country/" + "El_Salvador").push().set({
-        foo: "bar"
-        // User_Information: {
-        //   First_Name: firstName,
-        //   Last_Name: lastName, 
-        //   Email: emailAddr
-        // },
-        // User_Location: {
-        //   // Street_Address: streetAddr, 
-        //   City: city,
-        //   US_State: usStates,
-        //   CA_Province: caStates,
-        //   MX_State: mxStates,
-        //   Zip_Postal_Code: zipCode,
-        //   Country: country
-        // },
+    firebaseAdmin.database().ref("Country/" + country).push().set({
+        User_Information: {
+          First_Name: firstName,
+          Last_Name: lastName, 
+          Email: emailAddr
+        },
+        User_Location: {
+          City: city,
+          US_State: usStates,
+          CA_Province: caStates,
+          MX_State: mxStates,
+          Zip_Postal_Code: zipCode,
+          Country: country
+        },
         // GPS_Coordinates: {
         //   Latitude: data.geometry.location.lat(),
         //   Longitude: data.geometry.location.lng()

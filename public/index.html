@@ -32,7 +32,7 @@
             </div>
             <div>
                 <label for="user_country_menu">Country:</label><br>
-                <select id="user_country_menu" onchange="showDiv('user_country_menu')">
+                <select id="user_country_menu" name="user_country_menu" onchange="showDiv('user_country_menu')">
                     <option value="AF">Afghanistan</option>
                     <option value="AX">Åland Islands</option>
                     <option value="AL">Albania</option>
@@ -286,7 +286,7 @@
             </div>
             <div class="hidden_form" id="user_us_state_form">
                 <label for="user_us_state_menu">States & Territories:</label><br>
-                <select id="user_us_state_menu">
+                <select id="user_us_state_menu" name="user_us_state_menu">
                     <optgroup label="States">
                         <option value="AL">Alabama</option>
                         <option value="AK">Alaska</option>
@@ -352,7 +352,7 @@
             </div>
             <div class="hidden_form" id="user_ca_state_form" hidden>
                 <label for="user_ca_state_menu">Provinces & Territories:</label><br>
-                <select id="user_ca_state_menu">
+                <select id="user_ca_state_menu" name="user_ca_state_menu">
                     <optgroup label="Provinces & Territories">
                             <option value="AB">Alberta</option>
                             <option value="BC">British Columbia</option>
@@ -372,7 +372,7 @@
             </div>
             <div class="hidden_form" id="user_mx_state_form" hidden>
             <label for="user_mx_state_menu">States:</label><br>
-                <select id="user_mx_state_menu">
+                <select id="user_mx_state_menu" name="user_mx_state_menu">
                     <optgroup label="States">
                             <option value="DIF">Distrito Federal</option>
                             <option value="AGS">Aguascalientes</option>
@@ -409,17 +409,13 @@
                     </optgroup>
                 </select>
             </div>
-            <!-- <div>
-                <label for="user_strt_addr_input">*Street Address:</label><br>
-                <input type="text" id="user_strt_addr_input" class="form_control" autocomplete="off" placeholder="74 Wythe Ave" value="74 Wythe Ave"/>
-            </div> -->
             <div>
                 <label name="user_city_input">City:</label><br>
                 <input type="text" id="user_city_input" name="user_city_input" class="form_control" autocomplete="off" placeholder="Brooklyn" value="Brooklyn" maxlength="20" required/>
             </div>
             <div>
                 <label name="user_zip_code_input">Zip/Postal Code:</label><br>
-                <input type="text" id="user_zip_code_input" class="form_control" autocomplete="off" placeholder="11249" value="11249" maxlength="15"/>
+                <input type="text" id="user_zip_code_input" name="user_zip_code_input" class="form_control" autocomplete="off" placeholder="11249" value="11249" maxlength="15"/>
             </div>
             <div>
                 <div class="g-recaptcha"
