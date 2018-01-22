@@ -29,35 +29,7 @@ exports.submit = firebaseFunc.https.onRequest((req, res) => {
     const city = req.body["user_city_input"];
     const zipCode = req.body["user_zip_code_input"];
 
-    const address = city + " " + usStates + " " + zipCode + " " + country;
-
-    geocoder.geocode(address, function(err, result) {
-
-        firebaseAdmin.database().ref("Country/" + country).push().set({
-            User_Information: {
-              First_Name: firstName,
-              Last_Name: lastName, 
-              Email: emailAddr
-            },
-            User_Location: {
-              City: city,
-              US_State: usStates,
-              CA_Province: caStates,
-              MX_State: mxStates,
-              Zip_Postal_Code: zipCode,
-              Country: country
-            },
-            GPS_Coordinates: {
-              Latitude: result[0].latitude,
-              Longitude: result[0].longitude
-            }
-          });
-
-          res.end("Recaptcha verification successful.")
-
-      });
-
-
+    const address = city + " " + zipCode + " " + country;
 
     // switch(countryFlag){
     //     case 1:    
@@ -83,22 +55,45 @@ exports.submit = firebaseFunc.https.onRequest((req, res) => {
     //       break;
     //   }
 
-    // rp({
-    //     uri: 'https://recaptcha.google.com/recaptcha/api/siteverify',
-    //     method: 'POST',
-    //     formData: {
-    //         secret: '6LeopD8UAAAAALTKnD0jUog0tmE4Xvm_ofL128JM',
-    //         response: recaptchaResponse
-    //     },
-    //     json: true
-    // }).then(result => {
-    //     if (result.success) {
+    rp({
+        uri: 'https://recaptcha.google.com/recaptcha/api/siteverify',
+        method: 'POST',
+        formData: {
+            secret: '6LeopD8UAAAAALTKnD0jUog0tmE4Xvm_ofL128JM',
+            response: recaptchaResponse
+        },
+        json: true
+    }).then(result => {
+        if (result.success) {
+            geocoder.geocode(address, function(err, geoCoderResult) {
 
-    //     }
-    //     else {
-    //         res.end("Recaptcha verification failed.")
-    //     }
-    // }).catch(reason => {
-    //     res.end("Recaptcha request failed.")
-    // })
+                firebaseAdmin.database().ref("Country/" + country).push().set({
+                    User_Information: {
+                      First_Name: firstName,
+                      Last_Name: lastName, 
+                      Email: emailAddr
+                    },
+                    User_Location: {
+                      City: city,
+                      US_State: usStates,
+                      CA_Province: caStates,
+                      MX_State: mxStates,
+                      Zip_Postal_Code: zipCode,
+                      Country: country
+                    },
+                    GPS_Coordinates: {
+                      Latitude: geoCoderResult[0].latitude,
+                      Longitude: geoCoderResult[0].longitude
+                    }
+                  });
+        
+                  res.end("Recaptcha verification successful.")
+              });
+        }
+        else {
+            res.status(500).end("Recaptcha verification failed.")
+        }
+    }).catch(reason => {
+        res.end("Recaptcha request failed.")
+    })
 })
