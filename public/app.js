@@ -14,7 +14,6 @@ var emailAddr = document.getElementById("user_email_input");
 var firstName = document.getElementById("user_fname_input");
 var lastName = document.getElementById("user_lname_input");
 var country = document.getElementById("user_country_menu");
-var state = document.getElementById("user_state_input");
 var city = document.getElementById("user_city_input");
 var zipCode = document.getElementById("user_zip_code_input");
 
