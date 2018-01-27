@@ -10,8 +10,9 @@ firebaseAdmin.initializeApp(firebaseFunc.config().firebase);
 var options = {
     provider: 'google',
     httpAdapter: 'https', 
-    apiKey: "ENTER YOUR GOOGLE MAPS API KEY",
-    formatter: null   };
+    apiKey: "AIzaSyA0Q7m1gULd67FSmRGaoP6UUtV-zlmMcJc",
+    formatter: null 
+};
 
 var geocoder = nodeGeocoder(options);
 
@@ -31,9 +32,9 @@ exports.submit = firebaseFunc.https.onRequest((req, res) => {
         uri: 'https://recaptcha.google.com/recaptcha/api/siteverify',
         method: 'POST',
         formData: {
-            secret: 'ENTER YOUR SECRET KEY',
+            secret: '6LeopD8UAAAAALTKnD0jUog0tmE4Xvm_ofL128JM',
             response: recaptchaResponse
-        },
+    },
         json: true
     }).then(result => {
         if (result.success) {
