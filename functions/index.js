@@ -9,9 +9,9 @@ firebaseAdmin.initializeApp(firebaseFunc.config().firebase);
 
 var options = {
     provider: 'google',
-    httpAdapter: 'https', 
+    httpAdapter: 'https',
     apiKey: "AIzaSyA0Q7m1gULd67FSmRGaoP6UUtV-zlmMcJc",
-    formatter: null 
+    formatter: null
 };
 
 var geocoder = nodeGeocoder(options);
@@ -34,31 +34,30 @@ exports.submit = firebaseFunc.https.onRequest((req, res) => {
         formData: {
             secret: '6LeopD8UAAAAALTKnD0jUog0tmE4Xvm_ofL128JM',
             response: recaptchaResponse
-    },
+        },
         json: true
     }).then(result => {
         if (result.success) {
-            geocoder.geocode(address, function(err, geoCoderResult) {
-            firebaseAdmin.database().ref("Country/" + country).push().set({
-                User_Information: {
-                    First_Name: firstName,
-                    Last_Name: lastName, 
-                    Email: emailAddr
-                },
-                User_Location: {
-                    City: city,
-                    Zip_Postal_Code: zipCode,
-                    Country: country
-                },
-                GPS_Coordinates: {
-                    Latitude: geoCoderResult[0].latitude,
-                    Longitude: geoCoderResult[0].longitude
-                }
+            geocoder.geocode(address, function (err, geoCoderResult) {
+                firebaseAdmin.database().ref("Country/" + country).push().set({
+                    User_Information: {
+                        First_Name: firstName,
+                        Last_Name: lastName,
+                        Email: emailAddr
+                    },
+                    User_Location: {
+                        City: city,
+                        Zip_Postal_Code: zipCode,
+                        Country: country
+                    },
+                    GPS_Coordinates: {
+                        Latitude: geoCoderResult[0].latitude,
+                        Longitude: geoCoderResult[0].longitude
+                    }
                 });
                 res.end("Recaptcha verification successful.")
             });
-        }
-        else {
+        } else {
             res.status(500).end("Recaptcha verification failed.")
         }
     }).catch(reason => {
