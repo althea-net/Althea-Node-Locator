@@ -12,8 +12,10 @@ var Module = (function () {
 
 	firebase.initializeApp(config);
 
-	var map;
-	var geocoder;
+	var map = null;
+	var markerCluster = null; 
+	var markerArr = [];
+	var geocoder = null;
 	var address = null;
 
 	var emailAddr = document.getElementById("user_email_input");
@@ -43,28 +45,14 @@ var Module = (function () {
 			},
 			zoom: 2,
 		});
-		readFromFirebase()
-	};
+		readFromFirebase();
 
-	// Convert address to Lat/ Lng
-	function geocodeAddress(geocoder, resultsMap) {
-		geocoder.geocode({
-			'address': address
-		}, function (results, status) {
-			if (status === 'OK') {
-				resultsMap.setCenter(results[0].geometry.location);
-				resultsMap.setZoom(14);
-				var marker = new google.maps.Marker({
-					position: results[0].geometry.location,
-					map: resultsMap
-				});
-			} else {
-				alert('Geocode was not successful for the following reason: ' + status);
-			}
-		});
+		markerCluster = new MarkerClusterer(map, markerArr, {imagePath: "./resources/m"});
 	};
 
 	function readFromFirebase() {
+		markerArr = [];
+
 		// Query data base for stored location
 		var fireDataBase = firebase.database().ref().child("Markers/");
 
@@ -85,6 +73,26 @@ var Module = (function () {
 					}
 				});
 				marker.setMap(map);
+				markerArr.push(marker);
+			}
+			markerCluster.addMarkers(markerArr);
+		});
+	};
+
+	// Convert address to Lat/ Lng
+	function geocodeAddress(geocoder, resultsMap) {
+		geocoder.geocode({
+			'address': address
+		}, function (results, status) {
+			if (status === 'OK') {
+				resultsMap.setCenter(results[0].geometry.location);
+				resultsMap.setZoom(14);
+				var marker = new google.maps.Marker({
+					position: results[0].geometry.location,
+					map: resultsMap
+				});
+			} else {
+				alert('Geocode was not successful for the following reason: ' + status);
 			}
 		});
 	};
