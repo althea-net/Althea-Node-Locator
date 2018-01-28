@@ -58,6 +58,14 @@ exports.submit = firebaseFunc.https.onRequest((req, res) => {
 						Longitude: geoCoderResult[0].longitude
 					}
 				});
+
+				firebaseAdmin.database().ref("Markers/").push().set({
+					GPS_Coordinates: {
+						Latitude: geoCoderResult[0].latitude,
+						Longitude: geoCoderResult[0].longitude
+					}
+				});
+
 				res.end("Recaptcha verification successful.")
 			});
 		} else {

@@ -1,6 +1,6 @@
 // @ts-check
 
-var Module = (function () {
+// var Module = (function () {
 	var config = {
 		apiKey: "AIzaSyA0Q7m1gULd67FSmRGaoP6UUtV-zlmMcJc",
 		authDomain: "althea-locator.firebaseapp.com",
@@ -65,8 +65,8 @@ var Module = (function () {
 	};
 
 	function readFromFirebase() {
-		// Query data base for stored locations
-		var fireDataBase = firebase.database().ref().child("Country/");
+		// Query data base for stored location
+		var fireDataBase = firebase.database().ref().child("Markers/");
 
 		fireDataBase.on("child_added", function (snapshot) {
 			var storedData = snapshot.val();
@@ -74,8 +74,8 @@ var Module = (function () {
 
 			for (var i = 0; i < keys.length; i++) {
 				var k = keys[i];
-				var storedLat = storedData[k].GPS_Coordinates.Latitude;
-				var storedLng = storedData[k].GPS_Coordinates.Longitude;
+				var storedLat = storedData[k].Latitude;
+				var storedLng = storedData[k].Longitude;
 
 				// Updates map with stored marker
 				var marker = new google.maps.Marker({
@@ -89,9 +89,9 @@ var Module = (function () {
 		});
 	};
 
-	return {
-		initMap: initMap,
-		resetView: resetView
-	};
+// 	return {
+// 		initMap: initMap,
+// 		resetView: resetView
+// 	};
 
-})();
+// })();
