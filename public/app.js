@@ -1,6 +1,6 @@
 // @ts-check
 
-// var Module = (function () {
+var Module = (function () {
 	var config = {
 		apiKey: "AIzaSyA0Q7m1gULd67FSmRGaoP6UUtV-zlmMcJc",
 		authDomain: "althea-locator.firebaseapp.com",
@@ -89,9 +89,9 @@
 		});
 	};
 
-// 	return {
-// 		initMap: initMap,
-// 		resetView: resetView
-// 	};
+	return {
+		initMap: initMap,
+		resetView: resetView
+	};
 
-// })();
+})();
