@@ -4,7 +4,6 @@ v0.2 The Node Locator utilizes Google Maps API + Firebase Realtime Database to p
 
 Planned Features include:
 * Cluster Markers
-* Gateway, Intermediary, and Client Node Markers
 
 
 # Getting Started
