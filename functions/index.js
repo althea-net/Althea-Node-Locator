@@ -1,7 +1,5 @@
 // @ts-check
 
-const express = require('express')
-const validator = require('express-validator')
 const firebaseAdmin = require('firebase-admin')
 const firebaseFunc = require('firebase-functions')
 const nodeGeocoder = require('node-geocoder')
@@ -11,10 +9,10 @@ firebaseAdmin.initializeApp(firebaseFunc.config().firebase);
 
 var options = {
 	provider: 'google',
-	httpAdapter: 'https',
-	apiKey: "<ADD STUFF HERE>",
-	formatter: null
-};
+	httpAdapter: 'https', 
+	apiKey: "AIzaSyA0Q7m1gULd67FSmRGaoP6UUtV-zlmMcJc",
+	formatter: null 
+ };
 
 var geocoder = nodeGeocoder(options);
 
@@ -34,8 +32,8 @@ exports.submit = firebaseFunc.https.onRequest((req, res) => {
 		uri: 'https://recaptcha.google.com/recaptcha/api/siteverify',
 		method: 'POST',
 		formData: {
-			secret: "<ADD STUFF HERE>",
-			response: recaptchaResponse
+			 secret: '6LeopD8UAAAAALTKnD0jUog0tmE4Xvm_ofL128JM',
+			 response: recaptchaResponse
 		},
 		json: true
 	}).then(result => {
@@ -62,6 +60,9 @@ exports.submit = firebaseFunc.https.onRequest((req, res) => {
 				});
 
 				firebaseAdmin.database().ref("Markers/").push().set({
+					Metadata: {
+						Timestamp: firebaseAdmin.database.ServerValue.TIMESTAMP
+					},
 					GPS_Coordinates: {
 						Latitude: geoCoderResult[0].latitude,
 						Longitude: geoCoderResult[0].longitude
