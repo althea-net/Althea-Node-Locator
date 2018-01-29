@@ -1,5 +1,7 @@
 // @ts-check
 
+const express = require('express')
+const validator = require('express-validator')
 const firebaseAdmin = require('firebase-admin')
 const firebaseFunc = require('firebase-functions')
 const nodeGeocoder = require('node-geocoder')
@@ -10,7 +12,7 @@ firebaseAdmin.initializeApp(firebaseFunc.config().firebase);
 var options = {
 	provider: 'google',
 	httpAdapter: 'https',
-	apiKey: "AIzaSyA0Q7m1gULd67FSmRGaoP6UUtV-zlmMcJc",
+	apiKey: "<ADD STUFF HERE>",
 	formatter: null
 };
 
@@ -27,12 +29,12 @@ exports.submit = firebaseFunc.https.onRequest((req, res) => {
 	const zipCode = req.body["user_zip_code_input"];
 
 	const address = city + " " + zipCode + " " + country;
-
+	
 	rp({
 		uri: 'https://recaptcha.google.com/recaptcha/api/siteverify',
 		method: 'POST',
 		formData: {
-			secret: '6LeopD8UAAAAALTKnD0jUog0tmE4Xvm_ofL128JM',
+			secret: "<ADD STUFF HERE>",
 			response: recaptchaResponse
 		},
 		json: true
