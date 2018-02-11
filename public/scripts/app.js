@@ -68,8 +68,8 @@ var Module = (function () {
 				// Updates map with stored marker
 				var marker = new google.maps.Marker({
 					position: {
-						lat: storedLat,
-						lng: storedLng
+						lat: parseFloat(storedLat),
+						lng: parseFloat(storedLng)
 					}
 				});
 				marker.setMap(map);
