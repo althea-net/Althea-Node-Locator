@@ -39,6 +39,7 @@ var submitLogic = active => (req, res) => {
   })
     .then(result => {
       if (result.success) {
+        const id = Math.random();
         geocoder.geocode(address, function(err, geoCoderResult) {
           firebaseAdmin
             .database()
@@ -46,7 +47,8 @@ var submitLogic = active => (req, res) => {
             .push()
             .set({
               Metadata: {
-                Timestamp: firebaseAdmin.database.ServerValue.TIMESTAMP
+                Timestamp: firebaseAdmin.database.ServerValue.TIMESTAMP,
+                Id: id
               },
               User_Information: {
                 First_Name: firstName,
@@ -71,7 +73,8 @@ var submitLogic = active => (req, res) => {
             .push()
             .set({
               Metadata: {
-                Timestamp: firebaseAdmin.database.ServerValue.TIMESTAMP
+                Timestamp: firebaseAdmin.database.ServerValue.TIMESTAMP,
+                Id: id
               },
               Active: active,
               GPS_Coordinates: {
