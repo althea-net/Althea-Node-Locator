@@ -41,6 +41,10 @@ var submitLogic = active => (req, res) => {
       if (result.success) {
         const id = Math.random();
         geocoder.geocode(address, function(err, geoCoderResult) {
+          if (err) {
+            console.log("error:", err);
+            res.status(500).end();
+          }
           firebaseAdmin
             .database()
             .ref("Country/" + country)
@@ -51,8 +55,6 @@ var submitLogic = active => (req, res) => {
                 Id: id
               },
               User_Information: {
-                First_Name: firstName,
-                Last_Name: lastName,
                 Email: emailAddr
               },
               User_Location: {
@@ -86,10 +88,12 @@ var submitLogic = active => (req, res) => {
           res.end("Recaptcha verification successful.");
         });
       } else {
+        console.log("Recaptcha verification failed. Result: ", result);
         res.status(500).end("Recaptcha verification failed.");
       }
     })
     .catch(reason => {
+      console.log("Recaptcha request failed:", reason);
       res.end("Recaptcha request failed.");
     });
 };
