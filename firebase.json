@@ -5,6 +5,10 @@
       {
         "source": "/submit",
         "function": "submit"
+      },
+      {
+        "source": "/submitActive",
+        "function": "submitActive"
       }
     ]
   }
